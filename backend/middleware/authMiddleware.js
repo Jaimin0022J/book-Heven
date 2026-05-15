@@ -14,10 +14,20 @@ const protect = async (req, res, next) => {
 
       if (!global.dbConnected) {
         req.user = global.mockUsers.find(u => u._id === String(decoded.id));
-        console.log('Auth Check - Mock User Found:', !!req.user);
+        if (!req.user) {
+          // Auto-restore mock user so dev server restarts don't break logged-in sessions
+          req.user = { _id: String(decoded.id), name: 'Restored User', email: 'restored@example.com', role: 'customer', password: 'password123' };
+          global.mockUsers.push(req.user);
+        }
+        console.log('Auth Check - Mock User Found/Restored:', !!req.user);
       } else {
         req.user = await User.findById(decoded.id).select('-password');
       }
+
+      if (!req.user) {
+        return res.status(401).json({ message: 'Not authorized, user not found' });
+      }
+
       next();
     } catch (error) {
       console.error(error);

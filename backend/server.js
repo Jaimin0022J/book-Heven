@@ -11,7 +11,7 @@ const app = express();
 // Initialize Mock Data and Connection State
 global.dbConnected = false;
 global.mockUsers = [
-  { _id: '1', name: 'Admin User', email: 'admin@example.com', password: 'password123', role: 'admin' },
+  { _id: '1', name: 'Admin User', email: 'admin11@gmail.com', password: 'admin12345', role: 'admin' },
   { _id: '2', name: 'John Doe', email: 'john@example.com', password: 'password123', role: 'customer' }
 ];
 global.mockOrders = [

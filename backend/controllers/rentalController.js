@@ -53,7 +53,15 @@ const createRental = async (req, res) => {
 const getMyRentals = async (req, res) => {
   try {
     if (!global.dbConnected) {
-      return res.json(global.mockRentals.filter(r => r.user === req.user._id));
+      const { getMockBooks } = require('./bookController');
+      const mockBooks = getMockBooks();
+      const populatedRentals = global.mockRentals
+        .filter(r => r.user === String(req.user._id))
+        .map(r => ({
+          ...r,
+          book: mockBooks.find(b => String(b._id) === String(r.book)) || r.book
+        }));
+      return res.json(populatedRentals);
     }
     const rentals = await Rental.find({ user: req.user._id }).populate('book');
     res.json(rentals);

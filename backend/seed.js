@@ -12,11 +12,10 @@ const seedData = async () => {
     await Book.deleteMany();
     await User.deleteMany();
 
-    // Create Admin User
     const admin = await User.create({
       name: 'Admin User',
-      email: 'admin@example.com',
-      password: 'password123',
+      email: 'admin11@gmail.com',
+      password: 'admin12345',
       role: 'admin'
     });
 
@@ -62,8 +61,8 @@ const seedData = async () => {
     await Book.insertMany(books);
 
     console.log('Data Seeded Successfully!');
-    console.log('Admin Email: admin@example.com');
-    console.log('Admin Password: password123');
+    console.log('Admin Email: admin11@gmail.com');
+    console.log('Admin Password: admin12345');
     process.exit();
   } catch (error) {
     console.error(`Error with seeding: ${error.message}`);
