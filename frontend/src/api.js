@@ -4,10 +4,8 @@ import axios from 'axios';
 const isProduction = window.location.hostname !== 'localhost';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://spotty-bushes-scream.loca.lt',
-  headers: {
-    'Bypass-Tunnel-Reminder': 'true',
-  }
+  // Use the VITE_API_URL if provided, else default to localhost for local dev
+  baseURL: import.meta.env.VITE_API_URL || (isProduction ? '' : 'http://localhost:5000'),
 });
 
 export default api;
